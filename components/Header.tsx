@@ -57,12 +57,12 @@ export default function Header() {
 
 return (
     <div className="bg-black">
-        <header className="container mx-auto px-4 md:px-20 bg-black">
+        <header className="container mx-auto px-4 md:px-20">
             <div className="flex flex-row items-center justify-between"> {/*navbar*/}
                 <div className="flex justify-start">
                     <img className="logo" src="/logo.png" alt="job search logo"></img>
                 </div>
-                <nav className="navbar justify-end text-xl">
+                <nav className="navbar text-xl">
                     <div className="w-fit ml-auto">
                         <div className="hamburger ml-auto">
                             <span></span>

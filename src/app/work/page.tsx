@@ -6,24 +6,29 @@ export default function Work () {
     return (
         <div className='bg-black'>
             <Banner bannerText={[
-                "here's a teeny-weeny", 
-                "glimpse of our work.",
-                "what's coming later is", "even greater"
+                <>
+                    here&apos;s a teeny-weeny<br />
+                    glimpse of our work.<br />
+                    what&apos;s coming later is,<br />
+                    even greater
+                </>
                 ]} bgColor='black' textColor='white'>
             </Banner>
-            
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-5 container mx-auto px-4 md:px-20">
-                {workData.map((work, index) => (
-                    <Card
-                        key={index}
-                        imageUrl={work.imageUrl}
-                        imageAlt={work.imageAlt}
-                        title={work.title}
-                        desc={work.desc}
-                    />
-                ))}
-            </section>
 
+            <div className="container mx-auto px-4 md:px-20 pb-20">
+                <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-5">
+                    {workData.map((work, index) => (
+                        <Card
+                            key={index}
+                            imageUrl={work.imageUrl}
+                            imageAlt={work.imageAlt}
+                            title={work.title}
+                            desc={work.desc}
+                        />
+                    ))}
+                </section>
+            </div>
+            
         </div>
     );
 }

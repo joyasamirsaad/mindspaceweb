@@ -102,19 +102,19 @@ body {
 }
 
 .active-link:hover {
-  @apply font-semibold border-b-2 border-[#E74C3C];
+  @apply border-b-2 border-[#E74C3C];
 }
 
 .banner {
-    @apply flex flex-col justify-center items-center text-center px-5 py-25 h-150 break-words;
+    @apply flex flex-col justify-center items-center text-center px-5 py-25 min-h-150 break-words;
 }
 
 .hov {
-    @apply transition-all duration-500 ease-in-out;
+    @apply duration-500 ease-in-out;
 }
 
 .hov:hover {
-    @apply text-black font-semibold border-b-2 border-black;
+    @apply text-black;
 }
 
 

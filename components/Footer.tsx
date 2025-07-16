@@ -36,7 +36,7 @@ export default function Footer() {
                 </div>
 
                 <div className="flex flex-row items-center col-span-full md:col-span-3">
-                    <h1 className="text-4xl font-bold">mindspace</h1>
+                    <h1 className="text-4xl">mindspace</h1>
                     <div className="border-l-2 mx-5 border-white h-full"></div>
                     <div className="flex flex-row gap-3 text-4xl">
                         {["instagram", "linkedin-in"].map((platform) => (
