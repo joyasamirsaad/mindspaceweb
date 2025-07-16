@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+html {
+    @apply scroll-smooth;
+}
+body {
+    cursor: none;
+}
+.logo {
+    @apply w-30 h-auto;
+}
+
+.navbar {
+    @apply relative;
+}
+
+.navbar ul {
+    @apply list-none /*py-2.5*/ flex;
+}
+
+.navbar li {
+    @apply mx-4;
+}
+ 
+.navbar a {
+    @apply text-gray-300 no-underline font-semibold /*py-1*/ transition-colors duration-300 ease-in-out;
+}
+
+.navbar a:hover {
+    @apply text-white;
+}
+
+.hamburger {
+  @apply hidden flex-col cursor-pointer px-3 py-3 justify-center items-center bg-[#00CBA3] rounded;
+}
+
+.hamburger span {
+    @apply w-6 h-1 bg-white mb-1 transition-all duration-300 rounded-sm origin-center self-end;
+}
+
+.hamburger.active span:nth-child(1) {
+    @apply rotate-45 relative top-2;
+}
+
+.hamburger.active span:nth-child(2) {
+    @apply opacity-0;
+}
+
+.hamburger.active span:nth-child(3) {
+    @apply -rotate-45 relative -top-2;
+}
+
+#menu-overlay.active {
+    @apply block;
+}
+
+@media screen and (max-width: 1024px) {
+    .hamburger {
+        @apply flex order-1;
+    }
+    .navbar {
+        @apply flex-col relative w-full;
+    }
+    .navbar ul {
+        @apply hidden flex-col order-2 absolute w-full top-full left-0 right-0 bg-[#F5F5F5] z-50 shadow-md px-4 mt-1;
+    }
+
+    .navbar ul.active {
+        @apply flex;
+    }
+
+    .navbar li {
+        @apply my-4 mx-0;
+    }
+
+    .navbar a {
+        @apply text-lg block py-2.5 px-2;
+    }
+}
+
+.active-link {
+  @apply font-semibold border-b-2 border-[#3498DB] transition-all duration-500 ease-in-out;
+}
+
+.active-link:hover {
+  @apply font-semibold border-b-2 border-[#E74C3C];
+}
+
+.banner {
+    @apply flex flex-col justify-center items-center text-center px-5 py-25 h-120 break-words;
+}
+
+.hov {
+    @apply transition-all duration-500 ease-in-out;
+}
+
+.hov:hover {
+    @apply text-black font-semibold border-b-2 border-black;
+}
+
+
+.swiper-pagination-bullet {
+  background-color: #ccc !important;
+  opacity: 0.6 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #00CBA3 !important;
+  opacity: 1 !important;
+}
+
+footer i {
+    @apply mr-1;
+}
+
