@@ -12,7 +12,7 @@ export default function Work () {
                 ]} bgColor='black' textColor='white'>
             </Banner>
             
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-5 container mx-auto px-4">
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-5 container mx-auto px-4 md:px-20">
                 {workData.map((work, index) => (
                     <Card
                         key={index}

@@ -9,10 +9,10 @@ export default function Footer() {
 
     return(
         <div className=" bg-[#E74C3C] text-white">
-            <footer className="grid grid-cols-1 md:grid-cols-10 gap-8 container mx-auto px-4 py-10">
+            <footer className="grid grid-cols-1 md:grid-cols-10 gap-8 container mx-auto px-4 md:px-20 py-10">
                     <div className="col-span-2">
-                        <h3 className="text-lg mb-5">sitemap</h3>
-                        <ul className="text-xs font-semibold">
+                        <h3 className="text-2xl mb-5">sitemap</h3>
+                        <ul className="text-md font-semibold">
                             <li><Link href="/about" className={`${isActive("/about") ? "active-link" : ""} hov`}>about us</Link></li>
                             <li><Link href="/work" className={`${isActive("/work") ? "active-link" : ""} hov`}>our work</Link></li>
                             <li><Link href="/clients" className={`${isActive("/clients") ? "active-link" : ""} hov`}>our clients</Link></li>
@@ -21,8 +21,8 @@ export default function Footer() {
                         </ul>
                     </div>
                     <div className="col-start-3 col-span-2">
-                        <h3 className="text-lg mb-5">offices</h3>
-                        <ul className="text-xs font-semibold">
+                        <h3 className="text-2xl mb-5">offices</h3>
+                        <ul className="text-md font-semibold">
                             <li><Link href="#" className={`${isActive("/#") ? "active-link" : ""} hov`}>dubai, UAE</Link></li>
                             <li><Link href="#" className={`${isActive("/#") ? "active-link" : ""} hov`}>beirut, LEBANON</Link></li>
                             <li><Link href="#" className={`${isActive("/#") ? "active-link" : ""} hov`}>paris, FRANCE</Link></li>
@@ -31,14 +31,14 @@ export default function Footer() {
                         </ul>
                     </div>
                 <div className="col-span-full md:col-start-8 md:col-span-2">
-                    <h3 className="text-lg mb-5">inquiries</h3>
-                    <Link href="#" className={`${isActive("/#") ? "active-link" : ""} text-xs font-semibold hov`}>briefme@mindspace-me.com</Link>
+                    <h3 className="text-2xl mb-5">inquiries</h3>
+                    <Link href="#" className={`${isActive("/#") ? "active-link" : ""} text-md font-semibold hov`}>briefme@mindspace-me.com</Link>
                 </div>
 
                 <div className="flex flex-row items-center col-span-full md:col-span-3">
-                    <h1 className="text-3xl font-bold">mindspace</h1>
+                    <h1 className="text-4xl font-bold">mindspace</h1>
                     <div className="border-l-2 mx-5 border-white h-full"></div>
-                    <div className="flex flex-row gap-3 text-2xl">
+                    <div className="flex flex-row gap-3 text-4xl">
                         {["instagram", "linkedin-in"].map((platform) => (
                             <Link key={platform} href="#" aria-label={platform} target="_blank">
                             <i className={`fab fa-${platform} hov`} />
@@ -47,9 +47,9 @@ export default function Footer() {
                     </div>
                 </div>
                 <div className="flex flex-row items-center col-span-full md:col-start-9 md:col-span-2 whitespace-nowrap">
-                    <Link href="#" className={`${isActive("/#") ? "active-link" : ""} text-xs hov`}>privacy policy</Link>
+                    <Link href="#" className={`${isActive("/#") ? "active-link" : ""} text-md hov`}>privacy policy</Link>
                     <div className="border-l-2 mx-3 border-white h-5"></div>
-                    <Link href="#" className={`${isActive("/#") ? "active-link" : ""} text-xs hov`}>terms of condition</Link>
+                    <Link href="#" className={`${isActive("/#") ? "active-link" : ""} text-md hov`}>terms of condition</Link>
                 </div>
             </footer>
         </div>

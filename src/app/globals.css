@@ -106,7 +106,7 @@ body {
 }
 
 .banner {
-    @apply flex flex-col justify-center items-center text-center px-5 py-25 h-120 break-words;
+    @apply flex flex-col justify-center items-center text-center px-5 py-25 h-150 break-words;
 }
 
 .hov {
