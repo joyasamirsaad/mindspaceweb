@@ -71,7 +71,7 @@ return (
                         </div>
 
                         <ul>
-                            <li><Link href="/about" className={isActive("/about") ? "active-link" : ""}>about us</Link></li>
+                            <li><Link href="/news" className={isActive("/news") ? "active-link" : ""}>news</Link></li>
                             <li><Link href="/work" className={isActive("/work") ? "active-link" : ""}>our work</Link></li>
                             <li><Link href="/clients" className={isActive("/clients") ? "active-link" : ""}>our clients</Link></li>
                             <li><Link href="/team" className={isActive("/team") ? "active-link" : ""}>our team</Link></li>
