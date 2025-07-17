@@ -1,6 +1,7 @@
 import Banner from '../../../components/Banner';
-import Card from '../../../components/Card';
-import { workData } from '../../../data/work';
+//import Card from '../../../components/Card';
+//import { workData } from '../../../data/work';
+import ProjectsList from '../../../components/Work';
 
 export default function Work () {
     return (
@@ -16,7 +17,8 @@ export default function Work () {
             </Banner>
 
             <div className="container mx-auto px-4 md:px-20 pb-20">
-                <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-5">
+                <ProjectsList />
+                {/*<section className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-5">
                     {workData.map((work, index) => (
                         <Card
                             key={index}
@@ -26,7 +28,7 @@ export default function Work () {
                             desc={work.desc}
                         />
                     ))}
-                </section>
+                </section>*/}
             </div>
             
         </div>
