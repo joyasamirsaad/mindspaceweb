@@ -10,7 +10,7 @@ type CardProps = {
 export default function Card({ imageUrl, imageAlt, title, desc, text, isNews  }: CardProps) {
   return (
     <div className="flex flex-col text-white">
-      <div className={`overflow-hidden ${isNews ? 'w-[50%] h-80 md:h-90' : 'w-full h-70 md:h-80'}`}>
+      <div className="w-full h-70 md:h-80 overflow-hidden">
         <img src={imageUrl} alt={imageAlt} className={`inset-0 w-full h-full object-cover transition-transform duration-1000 ease-out ${isNews ? '' : 'hover:scale-115'}`}></img>
       </div>
       <div className="p-4">

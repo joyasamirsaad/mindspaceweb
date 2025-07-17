@@ -33,11 +33,12 @@ function NewsList({ news }: NewsListProps) {
     };
 
     return (
+        <>
         <Swiper
         simulateTouch={true}
         onSwiper={setSwiper}
         spaceBetween={20} 
-        slidesPerView={1}
+        slidesPerView={2}
         /*breakpoints={{
           640: { slidesPerView: 1, spaceBetween: 20 },
           768: { slidesPerView: 3, spaceBetween: 24 },
@@ -63,7 +64,34 @@ function NewsList({ news }: NewsListProps) {
             </SwiperSlide>
             ))}
         </Swiper>
+        <div className="flex gap-4 justify-center">
+            <button
+                onClick={slidePrev}
+                aria-label="Previous slide"
+                disabled={atStart}
+                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 ease-in-out
+                    ${atStart 
+                    ? 'bg-gray-300 opacity-50 pointer-events-none cursor-not-allowed' 
+                    : 'bg-[#d3d3d3] hover:bg-[#E74C3C]'
+                    }`}
+                >
+                <i className="fas fa-arrow-left text-white text-sm"></i>
+            </button>
 
+            <button
+                onClick={slideNext}
+                aria-label="Next slide"
+                disabled={atEnd}
+                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 ease-in-out
+                    ${atEnd 
+                    ? 'bg-gray-300 opacity-50 pointer-events-none cursor-not-allowed' 
+                    : 'bg-[#d3d3d3] hover:bg-[#3498DB]'
+                    }`}
+                >
+                <i className="fas fa-arrow-right text-white text-sm"></i>
+            </button>
+          </div>
+        </>
     );
 
 }
