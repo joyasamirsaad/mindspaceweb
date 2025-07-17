@@ -2,7 +2,14 @@
 import Link from 'next/link';
 import { usePathname } from "next/navigation";
 
-export default function Footer() {
+type FooterProps = {
+  socialLinks: {
+    instagram: string;
+    linkedin: string;
+  };
+};
+
+export default function Footer({ socialLinks }: FooterProps) {
     const pathname = usePathname();
     const normalizePath = (path: string) => path.replace(/\/$/, "");
     const isActive = (href: string) => normalizePath(pathname) === normalizePath(href);
@@ -39,17 +46,18 @@ export default function Footer() {
                     <h1 className="text-4xl">mindspace</h1>
                     <div className="border-l-2 mx-5 border-white h-full"></div>
                     <div className="flex flex-row gap-3 text-4xl">
-                        {["instagram", "linkedin-in"].map((platform) => (
-                            <Link key={platform} href="#" aria-label={platform} target="_blank">
-                            <i className={`fab fa-${platform} hov`} />
-                            </Link>
-                        ))}
+                        <Link href={socialLinks.instagram} aria-label="instagram" target="_blank">
+                            <i className="fab fa-instagram hov" />
+                        </Link>
+                        <Link href={socialLinks.linkedin} aria-label="linkedin" target="_blank">
+                            <i className="fab fa-linkedin-in hov" />
+                        </Link>
                     </div>
                 </div>
                 <div className="flex flex-row items-center col-span-full md:col-start-9 md:col-span-2 whitespace-nowrap">
-                    <Link href="#" className={`${isActive("/#") ? "active-link" : ""} text-md hov`}>privacy policy</Link>
+                    <Link href="#" target="_blank" className={`${isActive("/#") ? "active-link" : ""} text-md hov`}>privacy policy</Link>
                     <div className="border-l-2 mx-3 border-white h-5"></div>
-                    <Link href="#" className={`${isActive("/#") ? "active-link" : ""} text-md hov`}>terms of condition</Link>
+                    <Link href="#" target="_blank" className={`${isActive("/#") ? "active-link" : ""} text-md hov`}>terms of condition</Link>
                 </div>
             </footer>
         </div>
