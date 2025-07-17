@@ -1,5 +1,5 @@
-"use client"
-import React, { useEffect, useState } from 'react';
+//"use client"
+//import React, { useEffect, useState } from 'react';
 import Card from '../components/Card';
 
 interface Project {
@@ -9,20 +9,23 @@ interface Project {
   description: string  | null;
 }
 
-function ProjectsList() {
-  const [projects, setProjects] = useState<Project[]>([]);
+interface ProjectsListProps {
+  projects: Project[];
+}
 
-  useEffect(() => {
-    //fetch data from API 
-    fetch('https://hanzo.dxpshift.com/api/projects')
-      .then(response => response.json())  //convert to JSON
+function ProjectsList({ projects }: ProjectsListProps) {
+  //const [projects, setProjects] = useState<Project[]>([]);
+
+  /*useEffect(() => {
+    fetch('https://hanzo.dxpshift.com/api/projects') //fetch data from API 
+      .then(response => response.json())  //convert to json
       .then(data => {
         if (data.success) {
-          setProjects(data.data); // Use the `data` array from response
+          setProjects(data.data); //info are all in data array
         }
       })
       .catch(error => console.error('API error:', error));
-  }, []);
+  }, []);*/
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-5">
