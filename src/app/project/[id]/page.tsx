@@ -27,6 +27,26 @@ export default function Project() {
   const [atEnd, setAtEnd] = useState(false);
   const [atStart, setAtStart] = useState(true);
 
+  const [windowReady, setWindowReady] = useState(false);
+  useEffect(() => {
+    setWindowReady(true);
+  }, []);
+
+  const [windowWidth, setWindowWidth] = useState(0);
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const slideNext = () => {
+      swiper?.slideNext();
+  };
+  const slidePrev = () => {
+      swiper?.slidePrev();
+  };
+
   const pathname = usePathname(); 
   const id = pathname.split("/").pop(); 
 
@@ -46,13 +66,12 @@ export default function Project() {
 
     fetchData();
   }, [id]);
+
   useEffect(() => {
-  if (swiper && projects.length > 0) {
-    swiper.update(); // forces Swiper to recalculate slides
-    setAtStart(swiper.isBeginning);
-    setAtEnd(swiper.isEnd);
+  if (swiper) {
+    swiper.update();
   }
-}, [projects, swiper]);
+}, [swiper]);
 
 
   if (project === null) return <div className="flex justify-center items-center h-screen bg-black">
@@ -65,13 +84,10 @@ export default function Project() {
 
   const prev = currentIndex && currentIndex > 0 ? projects[currentIndex - 1] : null;
   const next = currentIndex !== null && currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
-  const slideNext = () => {
-      swiper?.slideNext();
-  };
 
-  const slidePrev = () => {
-      swiper?.slidePrev();
-  };
+  const relatedProjects = projects
+    .filter((relatedProject) => relatedProject.id !== project.id && relatedProject.id !== prev?.id && relatedProject.id !== next?.id)
+    .slice(0, 3)
 
   return (
     <div className="bg-black text-white">
@@ -97,8 +113,6 @@ export default function Project() {
             <span></span>
           )}
 
-          <Link href="/work" className="text-gray-300 hover:underline hover:text-white">Back to Work</Link>
-
           {next ? (
             <Link href={`/project/${next.id}`} className="text-gray-300 hover:underline hover:text-white">{next.title} <i className="fas fa-arrow-right text-sm"></i></Link>
           ) : (
@@ -106,14 +120,18 @@ export default function Project() {
           )}
         </div>
 
+        <div className="text-center"><Link href="/work" className="text-gray-300 hover:underline hover:text-white">Back to Work</Link></div>
+
         <div className="mt-10">
           <h2 className="text-xl md:text-2xl font-bold mb-4">Related Projects</h2>
           <section>
+            {windowReady && (
             <Swiper
+              key={windowWidth}
               simulateTouch={true}
               onSwiper={setSwiper}
               spaceBetween={20}
-              slidesPerView={3}
+              slidesPerView={1}
               breakpoints={{
                 640: { slidesPerView: 1, spaceBetween: 20 },
                 768: { slidesPerView: 3, spaceBetween: 20 },
@@ -128,8 +146,7 @@ export default function Project() {
               setAtEnd(swiperInstance.isEnd);
             }}
             >
-              {projects
-                .filter((relatedProject) => relatedProject.id !== project.id && relatedProject.id !== prev?.id && relatedProject.id !== next?.id)
+              {relatedProjects
                 .map((relatedProject) => (
                   <SwiperSlide key={relatedProject.id}>
                     <Link href={`/project/${relatedProject.id}`} key={relatedProject.id} className="cursor-pointer">
@@ -142,7 +159,7 @@ export default function Project() {
                     </Link>
                   </SwiperSlide>
                 ))}
-            </Swiper>
+            </Swiper>)}
             <div className="flex gap-4 justify-center md:hidden">
               <button
                   onClick={slidePrev}
