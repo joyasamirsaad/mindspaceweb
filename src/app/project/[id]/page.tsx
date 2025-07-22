@@ -46,6 +46,14 @@ export default function Project() {
 
     fetchData();
   }, [id]);
+  useEffect(() => {
+  if (swiper && projects.length > 0) {
+    swiper.update(); // forces Swiper to recalculate slides
+    setAtStart(swiper.isBeginning);
+    setAtEnd(swiper.isEnd);
+  }
+}, [projects, swiper]);
+
 
   if (project === null) return <div className="flex justify-center items-center h-screen bg-black">
       <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -64,13 +72,6 @@ export default function Project() {
   const slidePrev = () => {
       swiper?.slidePrev();
   };
-  useEffect(() => {
-  if (swiper && projects.length > 0) {
-    swiper.update(); // forces Swiper to recalculate slides
-    setAtStart(swiper.isBeginning);
-    setAtEnd(swiper.isEnd);
-  }
-}, [projects, swiper]);
 
   return (
     <div className="bg-black text-white">
@@ -129,7 +130,6 @@ export default function Project() {
             >
               {projects
                 .filter((relatedProject) => relatedProject.id !== project.id && relatedProject.id !== prev?.id && relatedProject.id !== next?.id)
-                .slice(0, 3)
                 .map((relatedProject) => (
                   <SwiperSlide key={relatedProject.id}>
                     <Link href={`/project/${relatedProject.id}`} key={relatedProject.id} className="cursor-pointer">
