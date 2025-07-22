@@ -3,6 +3,8 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 import Card from "../../../../components/Card";
 
 interface Project {
@@ -21,6 +23,7 @@ export default function Project() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [project, setProject] = useState<Project | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+  const [swiper, setSwiper] = useState<SwiperClass | null>(null);
 
   const pathname = usePathname(); 
   const id = pathname.split("/").pop(); 
@@ -88,20 +91,29 @@ export default function Project() {
 
         <div className="mt-10">
           <h2 className="text-xl md:text-2xl font-bold mb-4">Related Projects</h2>
-          <section className="grid grid-cols-3 gap-8">
-            {projects
-              .filter((relatedProject) => relatedProject.id !== project.id && relatedProject.id !== prev?.id && relatedProject.id !== next?.id)
-              .slice(0, 3)
-              .map((relatedProject) => (
-                <Link href={`/project/${relatedProject.id}`} key={relatedProject.id} className="cursor-pointer">
-                  <Card
-                    imageUrl={relatedProject.image || "grayimg.jpg"}
-                    imageAlt={relatedProject.title}
-                    title={relatedProject.title}
-                    desc={relatedProject.description || "No description available"}
-                  />
-                </Link>
-              ))}
+          <section >
+            <Swiper
+              simulateTouch={true}
+              onSwiper={setSwiper}
+              spaceBetween={20}
+              slidesPerView={3}
+            >
+              {projects
+                .filter((relatedProject) => relatedProject.id !== project.id && relatedProject.id !== prev?.id && relatedProject.id !== next?.id)
+                .slice(0, 3)
+                .map((relatedProject) => (
+                  <SwiperSlide key={relatedProject.id}>
+                    <Link href={`/project/${relatedProject.id}`} key={relatedProject.id} className="cursor-pointer">
+                      <Card
+                        imageUrl={relatedProject.image || "grayimg.jpg"}
+                        imageAlt={relatedProject.title}
+                        title={relatedProject.title}
+                        desc={relatedProject.description || "No description available"}
+                      />
+                    </Link>
+                  </SwiperSlide>
+                ))}
+            </Swiper>
           </section>
         </div>
       </div>
