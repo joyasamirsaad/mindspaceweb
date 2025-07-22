@@ -27,14 +27,6 @@ export default function Project() {
   const [atEnd, setAtEnd] = useState(false);
   const [atStart, setAtStart] = useState(true);
 
-  const slideNext = () => {
-      swiper?.slideNext();
-  };
-
-  const slidePrev = () => {
-      swiper?.slidePrev();
-  };
-
   const pathname = usePathname(); 
   const id = pathname.split("/").pop(); 
 
@@ -65,7 +57,14 @@ export default function Project() {
 
   const prev = currentIndex && currentIndex > 0 ? projects[currentIndex - 1] : null;
   const next = currentIndex !== null && currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
+  const slideNext = () => {
+      swiper?.slideNext();
+  };
 
+  const slidePrev = () => {
+      swiper?.slidePrev();
+  };
+  
   return (
     <div className="bg-black text-white">
       <div className="container mx-auto px-4 md:px-20 py-20">
@@ -117,9 +116,9 @@ export default function Project() {
                 setAtEnd(swiper.isEnd);
             }}
             onInit={(swiperInstance) => {
-  setAtStart(swiperInstance.isBeginning);
-  setAtEnd(swiperInstance.isEnd);
-}}
+              setAtStart(swiperInstance.isBeginning);
+              setAtEnd(swiperInstance.isEnd);
+            }}
             >
               {projects
                 .filter((relatedProject) => relatedProject.id !== project.id && relatedProject.id !== prev?.id && relatedProject.id !== next?.id)
