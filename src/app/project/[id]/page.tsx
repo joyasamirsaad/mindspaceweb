@@ -64,7 +64,14 @@ export default function Project() {
   const slidePrev = () => {
       swiper?.slidePrev();
   };
-  
+  useEffect(() => {
+  if (swiper && projects.length > 0) {
+    swiper.update(); // forces Swiper to recalculate slides
+    setAtStart(swiper.isBeginning);
+    setAtEnd(swiper.isEnd);
+  }
+}, [projects, swiper]);
+
   return (
     <div className="bg-black text-white">
       <div className="container mx-auto px-4 md:px-20 py-20">
