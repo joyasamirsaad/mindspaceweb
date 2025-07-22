@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Card from "../../../../components/Card";
 
 interface Project {
   id: number;
@@ -55,37 +56,55 @@ export default function Project() {
   return (
     <div className="bg-black text-white">
       <div className="container mx-auto px-4 md:px-20 py-20">
-      <div className="mb-6 flex flex-col items-center justify-center">
-        <h1 className="text-2xl md:text-4xl font-bold mb-6">{project.title}</h1>
-        <img src={project.image || "/grayimg.jpg"} alt={project.title} className="w-full md:max-w-3xl"/>
-      </div>
+        <div className="mb-6 flex flex-col items-center justify-center">
+          <h1 className="text-2xl md:text-4xl font-bold mb-6">{project.title}</h1>
+          <img src={project.image || "/grayimg.jpg"} alt={project.title} className="w-full md:max-w-3xl"/>
+        </div>
 
-      <div className="flex flex-col gap-2 mb-6">
-        <p className="mb-4 text-center text-md md:text-lg"> {project.description || ""}</p>
-        {project.text && <p>{project.text}</p>}
-        {project.client && (<p><strong>Client:</strong> {project.client}</p>)}
-        {project.director && (<p><strong>Director:</strong> {project.director}</p>)}
-        {project.agency && (<p><strong>Agency:</strong> {project.agency}</p>)}
-        {project.cinematographer && (<p><strong>Cinematographer:</strong> {project.cinematographer}</p>)}
-      </div>
+        <div className="flex flex-col gap-2 mb-6">
+          <p className="mb-4 text-center text-md md:text-lg"> {project.description || ""}</p>
+          {project.text && <p>{project.text}</p>}
+          {project.client && (<p><strong>Client:</strong> {project.client}</p>)}
+          {project.director && (<p><strong>Director:</strong> {project.director}</p>)}
+          {project.agency && (<p><strong>Agency:</strong> {project.agency}</p>)}
+          {project.cinematographer && (<p><strong>Cinematographer:</strong> {project.cinematographer}</p>)}
+        </div>
 
-      <div className="flex justify-between items-center">
-        {prev ? (
-          <Link href={`/project/${prev.id}`} className="text-gray-300 hover:underline hover:text-white"><i className="fas fa-arrow-left text-sm"></i> {prev.title}</Link>
-        ) : (
-          <span></span>
-        )}
+        <div className="flex justify-between items-center">
+          {prev ? (
+            <Link href={`/project/${prev.id}`} className="text-gray-300 hover:underline hover:text-white"><i className="fas fa-arrow-left text-sm"></i> {prev.title}</Link>
+          ) : (
+            <span></span>
+          )}
 
-        <Link href="/work" className="text-gray-300 hover:underline hover:text-white">Back to Work</Link>
+          <Link href="/work" className="text-gray-300 hover:underline hover:text-white">Back to Work</Link>
 
-        {next ? (
-          <Link href={`/project/${next.id}`} className="text-gray-300 hover:underline hover:text-white">{next.title} <i className="fas fa-arrow-right text-sm"></i></Link>
-        ) : (
-          <span></span>
-        )}
+          {next ? (
+            <Link href={`/project/${next.id}`} className="text-gray-300 hover:underline hover:text-white">{next.title} <i className="fas fa-arrow-right text-sm"></i></Link>
+          ) : (
+            <span></span>
+          )}
+        </div>
+
+        <div className="mt-10">
+          <h2 className="text-xl md:text-2xl font-bold mb-4">Related Projects</h2>
+          <section className="grid grid-cols-3 gap-8">
+            {projects
+              .filter((relatedProject) => relatedProject.id !== project.id && relatedProject.id !== prev?.id && relatedProject.id !== next?.id)
+              .slice(0, 3)
+              .map((relatedProject) => (
+                <Link href={`/project/${relatedProject.id}`} key={relatedProject.id} className="cursor-pointer">
+                  <Card
+                    imageUrl={relatedProject.image || "grayimg.jpg"}
+                    imageAlt={relatedProject.title}
+                    title={relatedProject.title}
+                    desc={relatedProject.description || "No description available"}
+                  />
+                </Link>
+              ))}
+          </section>
+        </div>
       </div>
     </div>
-    </div>
-    
   );
 }
