@@ -19,7 +19,6 @@ export default function Card({ imageUrl, imageAlt, title, desc, text, isNews  }:
         {text && (
           <p className="mt-8 text-gray-400 text-lg" dangerouslySetInnerHTML={{ __html: text }} />
         )}
-
       </div>
     </div>
   );
