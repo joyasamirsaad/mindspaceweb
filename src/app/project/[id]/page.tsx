@@ -24,6 +24,16 @@ export default function Project() {
   const [project, setProject] = useState<Project | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
+  const [atEnd, setAtEnd] = useState(false);
+  const [atStart, setAtStart] = useState(true);
+
+  const slideNext = () => {
+      swiper?.slideNext();
+  };
+
+  const slidePrev = () => {
+      swiper?.slidePrev();
+  };
 
   const pathname = usePathname(); 
   const id = pathname.split("/").pop(); 
@@ -91,12 +101,25 @@ export default function Project() {
 
         <div className="mt-10">
           <h2 className="text-xl md:text-2xl font-bold mb-4">Related Projects</h2>
-          <section >
+          <section>
             <Swiper
               simulateTouch={true}
               onSwiper={setSwiper}
               spaceBetween={20}
               slidesPerView={3}
+              breakpoints={{
+                640: { slidesPerView: 1, spaceBetween: 20 },
+                768: { slidesPerView: 3, spaceBetween: 20 },
+                1024: { slidesPerView: 3, spaceBetween: 20 },
+              }}
+              onSlideChange={(swiper) => {
+                setAtStart(swiper.isBeginning);
+                setAtEnd(swiper.isEnd);
+            }}
+            onInit={(swiperInstance) => {
+  setAtStart(swiperInstance.isBeginning);
+  setAtEnd(swiperInstance.isEnd);
+}}
             >
               {projects
                 .filter((relatedProject) => relatedProject.id !== project.id && relatedProject.id !== prev?.id && relatedProject.id !== next?.id)
@@ -114,6 +137,33 @@ export default function Project() {
                   </SwiperSlide>
                 ))}
             </Swiper>
+            <div className="flex gap-4 justify-center md:hidden">
+              <button
+                  onClick={slidePrev}
+                  aria-label="Previous slide"
+                  disabled={atStart}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 ease-in-out
+                      ${atStart 
+                      ? 'bg-gray-300 opacity-50 pointer-events-none cursor-not-allowed' 
+                      : 'bg-[#d3d3d3] hover:bg-[#E74C3C]'
+                      }`}
+                  >
+                  <i className="fas fa-arrow-left text-white text-sm"></i>
+              </button>
+
+              <button
+                  onClick={slideNext}
+                  aria-label="Next slide"
+                  disabled={atEnd}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 ease-in-out
+                      ${atEnd 
+                      ? 'bg-gray-300 opacity-50 pointer-events-none cursor-not-allowed' 
+                      : 'bg-[#d3d3d3] hover:bg-[#3498DB]'
+                      }`}
+                  >
+                  <i className="fas fa-arrow-right text-white text-sm"></i>
+              </button>
+            </div>
           </section>
         </div>
       </div>
