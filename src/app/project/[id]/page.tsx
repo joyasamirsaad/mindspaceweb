@@ -53,10 +53,11 @@ export default function Project() {
   const next = currentIndex !== null && currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
 
   return (
-    <div className="bg-black text-white container mx-auto px-4 md:px-20 py-20">
+    <div className="bg-black text-white">
+      <div className="container mx-auto px-4 md:px-20 py-20">
       <div className="mb-6 flex flex-col items-center justify-center">
         <h1 className="text-2xl md:text-4xl font-bold mb-6">{project.title}</h1>
-        <img src={project.image || "/grayimg.jpg"} alt={project.title} className="max-w-3xl"/>
+        <img src={project.image || "/grayimg.jpg"} alt={project.title} className="w-full md:max-w-3xl"/>
       </div>
 
       <div className="flex flex-col gap-2 mb-6">
@@ -84,5 +85,7 @@ export default function Project() {
         )}
       </div>
     </div>
+    </div>
+    
   );
 }

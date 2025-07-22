@@ -19,7 +19,7 @@ export default function CustomCursor() {
   return (
     <div
       ref={cursorRef}
-      className="fixed z-[9999] pointer-events-none -translate-x-1/2 -translate-y-1/2"
+      className="hidden md:block fixed z-[9999] pointer-events-none -translate-x-1/2 -translate-y-1/2"
     >
       {/* Outer Ring */}
       <div className="w-10 h-10 border-2 border-white rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
