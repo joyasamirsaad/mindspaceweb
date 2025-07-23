@@ -31,9 +31,18 @@ export default function Home() {
     );
   }
 
-  const displayedProjects = selectedIndex !== null
-    ? projects.slice(selectedIndex + 1, selectedIndex + 4)
-    : projects.slice(0, 3);
+  const totalProjects = projects.length;
+  const startIndex = selectedIndex !== null ? selectedIndex + 1 : 0;
+
+  let displayedProjects = projects.slice(startIndex, startIndex + 3);
+
+  if (displayedProjects.length < 3) {
+    displayedProjects = [
+      ...displayedProjects,
+      ...projects.slice(0, 3 - displayedProjects.length),
+    ];
+  }
+
 
   const selectedProject = selectedIndex !== null ? projects[selectedIndex] : null;
 
@@ -45,7 +54,14 @@ export default function Home() {
         <section className="grid grid-cols-8 gap-4 mt-5">
           <div className="flex flex-col items-center col-span-2">
             {displayedProjects.map((project, idx) => (
-              <button key={project.id} className="cursor-pointer w-full h-40 md:h-50 overflow-hidden mb-4" onClick={() => setSelectedIndex(selectedIndex !== null ? selectedIndex + idx + 1 : idx)}> {/*+ previous selectedIndex to return to the global index in the array + idx to get the index of the current product % the original array +1 to get the next product*/}
+              <button key={project.id} className="cursor-pointer w-full h-40 md:h-50 overflow-hidden mb-4" 
+              onClick={() => {
+                const nextIndex =
+                  selectedIndex !== null
+                    ? (selectedIndex + idx + 1) % projects.length 
+                    : idx;
+                setSelectedIndex(nextIndex);
+              }}> {/*+ previous selectedIndex to return to the global index in the array + idx to get the index of the current product % the original array +1 to get the next product*/}
                 <div className="w-full h-full bg-cover bg-center flex items-center justify-center transition-transform duration-1000 ease-out hover:scale-110" style={{ backgroundImage: `url(${project.image || '/grayimg.jpg'})` }}>
                   <h2 className="text-sm font-semibold">{project.title}</h2>
                 </div>
