@@ -104,15 +104,15 @@ export default function Project() {
           {project.text && <p>{project.text}</p>}
           {project.client && (
             <p>
-              <strong className="relative group cursor-pointer">
-              Client:
+              <span className="relative group cursor-pointer">
+              <strong>Client:</strong>
               <span className="ml-1">{project.client}</span>
               <span className="absolute left-45 top-0 min-w-100 bg-gray-300 text-black text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity pointer-events-none z-10 flex flex-col items-center gap-2">
                 <span className="absolute left-[-8px] top-2 border-t-8 border-b-8 border-r-8 border-t-transparent border-b-transparent border-r-gray-300"></span>
                 <img src="/grayimg.jpg" alt="Client" className="w-10 h-10 rounded-full" />
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
               </span>
-              </strong>
+              </span>
             </p>
           )}
           {project.director && (<p><strong>Director:</strong> {project.director}</p>)}
