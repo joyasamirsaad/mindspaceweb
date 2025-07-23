@@ -20,8 +20,10 @@
 }
 
 html {
-    @apply scroll-smooth;
+  scroll-behavior: smooth;
 }
+
+
 body {
     cursor: none;
 }

@@ -92,20 +92,35 @@ export default function Project() {
   return (
     <div className="bg-black text-white">
       <div className="container mx-auto px-4 md:px-20 py-20">
+        {/*image*/}
         <div className="mb-6 flex flex-col items-center justify-center">
           <h1 className="text-2xl md:text-4xl font-bold mb-6">{project.title}</h1>
           <img src={project.image || "/grayimg.jpg"} alt={project.title} className="w-full md:max-w-3xl"/>
         </div>
 
+        {/*info*/}
         <div className="flex flex-col gap-2 mb-6">
           <p className="mb-4 text-center text-md md:text-lg"> {project.description || ""}</p>
           {project.text && <p>{project.text}</p>}
-          {project.client && (<p><strong>Client:</strong> {project.client}</p>)}
+          {project.client && (
+            <p>
+              <strong className="relative group cursor-pointer">
+              Client:
+              <span className="ml-1">{project.client}</span>
+              <span className="absolute left-45 top-0 min-w-100 bg-gray-300 text-black text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity pointer-events-none z-10 flex flex-col items-center gap-2">
+                <span className="absolute left-[-8px] top-2 border-t-8 border-b-8 border-r-8 border-t-transparent border-b-transparent border-r-gray-300"></span>
+                <img src="/grayimg.jpg" alt="Client" className="w-10 h-10 rounded-full" />
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </span>
+              </strong>
+            </p>
+          )}
           {project.director && (<p><strong>Director:</strong> {project.director}</p>)}
           {project.agency && (<p><strong>Agency:</strong> {project.agency}</p>)}
           {project.cinematographer && (<p><strong>Cinematographer:</strong> {project.cinematographer}</p>)}
         </div>
 
+      {/*buttons prev next*/}
         <div className="flex justify-between items-center">
           {prev ? (
             <Link href={`/project/${prev.id}`} className="text-gray-300 hover:underline hover:text-white"><i className="fas fa-arrow-left text-sm"></i> {prev.title}</Link>

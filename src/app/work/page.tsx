@@ -24,7 +24,7 @@ export default async function Work () {
                 ]} bgColor='black' textColor='white'>
             </Banner>
 
-            <div className="container mx-auto px-4 md:px-20 pb-20">
+            <div className="container mx-auto px-4 md:px-20 pb-20" id="top">
                 <ProjectsList projects={projects} />
                 {/*<section className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-5">
                     {workData.map((work, index) => (
@@ -37,6 +37,10 @@ export default async function Work () {
                         />
                     ))}
                 </section>*/}
+                <div className="text-right">
+                {/*<div className="border-l-2 mx-3 border-white h-5"></div>*/}
+                <a href="#top" className="text-gray-300 hover:underline hover:text-white">Back to Top</a>
+            </div>
             </div>
             
         </div>
