@@ -18,7 +18,10 @@ export default function Home() {
     (fetch('https://hanzo.dxpshift.com/api/projects', { cache: 'no-store' })
       .then(response => response.json())
       .then(data => {
-        if (data.success) setProjects(data.data);
+        if (data.success) {
+          setProjects(data.data);
+          setSelectedIndex(0);
+        }
       })
       .finally(() => setLoading(false)));
   }, []);
