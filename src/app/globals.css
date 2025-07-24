@@ -119,7 +119,6 @@ body {
     @apply text-black;
 }
 
-
 .swiper-pagination-bullet {
   background-color: #ccc !important;
   opacity: 0.6 !important;

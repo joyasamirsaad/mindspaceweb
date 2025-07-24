@@ -82,7 +82,7 @@ return (
                                 </span>
                                 <ul className="absolute opacity-0 group-hover:opacity-100 group-hover:flex group-hover:flex-col right-0 bg-black rounded-md border-2 border-gray-300 mt-2 min-w-10 z-50">
                                     <li className="px-4 py-2"><Link href="/events">events</Link></li>
-                                    <li className="px-4 py-2"><Link href="/playlists">playlists</Link></li>
+                                    <li className="px-4 py-2"><Link href="/playlist">playlists</Link></li>
                                     <li className="px-4 py-2"><Link href="/favorites">favorites</Link></li>
                                 </ul>
                             </li>
