@@ -30,26 +30,29 @@ export default function Work () {
     /*search*/
     const [searchKeyword, setSearchKeyword] = useState('');
     const [searchError, setSearchError] = useState("");
+    const [filteredProjects, setFilteredProjects] = useState<Project[] | null>(null);
     const router = useRouter();
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchKeyword(e.target.value);
         if (searchError) setSearchError("");
+        setFilteredProjects(null);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             const value = searchKeyword.trim();
-            if (!value) return;  
+            if (!value) { setFilteredProjects(null); return; }
 
-            const match = projects.find(
+            const match = projects.filter(
             (p: Project) =>
                 p.title?.toLowerCase().includes(value.toLowerCase()) ||
                 p.description?.toLowerCase().includes(value.toLowerCase())
             );
 
-            if (match) {
-                router.push(`/project/${match.id}`);
+            if (match.length > 0) {
+                setFilteredProjects(match);
+                setSearchError('');
             } 
             else {
                 setSearchError("No matching project found.");
@@ -82,7 +85,7 @@ export default function Work () {
                     <div className="text-[#E74C3C] text-sm text-right mt-1">{searchError}</div>
                 )}
 
-                <ProjectsList projects={projects} />
+                <ProjectsList projects={filteredProjects ?? projects} />
                 {/*<section className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-5">
                     {workData.map((work, index) => (
                         <Card
