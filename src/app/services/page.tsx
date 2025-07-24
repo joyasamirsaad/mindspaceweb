@@ -104,7 +104,7 @@ export default function Services() {
                     <p>Always at your service</p>
                 </div>
             )}
-            <div className="flex gap-4 justify-center">
+            <div className="flex gap-4 justify-center mt-4">
             <button
                 onClick={slidePrev}
                 aria-label="Previous slide"
