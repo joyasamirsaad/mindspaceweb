@@ -6,8 +6,9 @@ import Link from "next/link";
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Card from "../../../../components/Card";
+import { Project } from "../../../../types/project";
 
-interface Project {
+{/*interface Project {
   id: number;
   title: string;
   image: string | null;
@@ -17,9 +18,9 @@ interface Project {
   director?: string;
   agency?: string;
   cinematographer?: string;
-}
+}*/}
 
-export default function Project() {
+export default function ProjectPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [project, setProject] = useState<Project | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
