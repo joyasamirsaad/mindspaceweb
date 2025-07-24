@@ -29,10 +29,6 @@ function Icon({ id, open }: IconProps) {
 export default function Services() {
   const [open, setOpen] = React.useState(1);
 
-  const handleOpen = (value: number) => {
-    setOpen(open === value ? 0 : value);
-  };
-
   const services = [
     {
       id: 1,
@@ -56,6 +52,24 @@ export default function Services() {
     },
   ];
 
+    const atStart = open === 1;
+    const atEnd = open === services.length;
+    const handleOpen = (value: number) => {
+        setOpen(open === value ? 0 : value);
+    };
+
+    const slidePrev = () => {
+        if (!atStart) {
+            setOpen(open - 1);
+        }
+        };
+
+        const slideNext = () => {
+        if (!atEnd) {
+            setOpen(open + 1);
+        }
+    };
+    
   return (
     <div className="bg-black text-white">
       <div className="container mx-auto px-4 md:px-20 py-20">
@@ -90,6 +104,33 @@ export default function Services() {
                     <p>Always at your service</p>
                 </div>
             )}
+            <div className="flex gap-4 justify-center">
+            <button
+                onClick={slidePrev}
+                aria-label="Previous slide"
+                disabled={atStart}
+                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 ease-in-out
+                    ${atStart 
+                    ? 'bg-gray-300 opacity-50 pointer-events-none cursor-not-allowed' 
+                    : 'bg-[#d3d3d3] hover:bg-[#E74C3C]'
+                    }`}
+                >
+                <i className="fas fa-arrow-left text-white text-sm"></i>
+            </button>
+
+            <button
+                onClick={slideNext}
+                aria-label="Next slide"
+                disabled={atEnd}
+                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 ease-in-out
+                    ${atEnd 
+                    ? 'bg-gray-300 opacity-50 pointer-events-none cursor-not-allowed' 
+                    : 'bg-[#d3d3d3] hover:bg-[#3498DB]'
+                    }`}
+                >
+                <i className="fas fa-arrow-right text-white text-sm"></i>
+            </button>
+          </div>
           </div>
         </div>
       </div>
