@@ -133,3 +133,71 @@ footer i {
     @apply mr-1;
 }
 
+.inputform {
+    @apply rounded-xl border-[0.17em] border-[#3498DB] text-white w-full h-12 box-border p-4;
+}
+
+.inputform:focus {
+    @apply outline-none border-[#E74C3C] shadow-lg;
+}
+
+.formtextarea {
+    @apply w-full min-h-20 resize-none;
+}
+
+.error-message {
+    @apply text-red-500 text-sm block;
+}
+
+.input-error {
+    @apply border-2 border-red-500;
+}
+
+.send {
+    @apply flex flex-row justify-center items-center justify-self-center m-8;
+}
+
+.send i {
+    @apply inline mr-2;
+}
+
+form:invalid .btn {
+    @apply bg-gray-300 cursor-not-allowed pointer-events-none;
+}
+
+.btn {
+    @apply px-8 py-4 m-4 bg-[#3498DB] text-white border-none text-lg cursor-pointer uppercase tracking-widest rounded transition-colors duration-300 ease-in-out;
+}
+
+.btn:hover {
+    @apply bg-[#E74C3C];
+}
+
+.contactus {
+    @apply flex flex-col items-center justify-center gap-4 break-words flex-wrap overflow-hidden;
+}
+
+.contactus form {
+    @apply flex flex-col gap-4 w-full max-w-4xl;
+}
+
+.radio-label {
+    @apply flex items-center text-white cursor-pointer p-2.5 rounded-xl transition-colors duration-300 ease-in-out;
+}
+
+.radio-label:hover {
+    @apply bg-[#E74C3C33];
+}
+
+.radio-label input[type="radio"] {
+    @apply mr-2.5;
+    accent-color: #3498DB;
+}
+
+.contactsections {
+    @apply border-2 border-[#3498DB] rounded-xl p-5 my-5;
+}
+
+.contactsections legend {
+    @apply px-2.5 text-[#3498DB] font-bold;
+}
