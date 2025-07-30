@@ -1,10 +1,11 @@
 'use client';
 
-import React from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import {
   Accordion,
   AccordionHeader,
 } from "@material-tailwind/react";
+import { gsap } from "gsap";
 
 type IconProps = {
   id: number;
@@ -28,6 +29,9 @@ function Icon({ id, open }: IconProps) {
 
 export default function Services() {
   const [open, setOpen] = React.useState(1);
+  const serviceRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const bodyRef = useRef<HTMLDivElement | null>(null);
+
 
   const services = [
     {
@@ -69,6 +73,26 @@ export default function Services() {
             setOpen(open + 1);
         }
     };
+
+  useLayoutEffect(() => {
+    gsap.context(() => {
+      gsap.from(serviceRefs.current, {
+        opacity: 0,
+        y: 50,
+        duration: 0.6,
+        stagger: 0.2, // stagger the animation for each service item
+        ease: "power2.out",
+      });
+
+      gsap.from(bodyRef.current, {
+        x: 100,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        delay: services.length * 0.2 + 0.3, // delay to ensure the accordion body animates after the headers
+      });
+    });
+  }, [services.length]);
     
   return (
     <div className="bg-black text-white">
@@ -77,18 +101,23 @@ export default function Services() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
           {/*Accordion Header*/}
           <div className="col-span-2">
-            {services.map((service) => (
-              <Accordion key={service.id} open={open === service.id} className={`mb-5 border-b-2 ${open === service.id ? "border-[#E74C3C]" : "border-[#3498DB]"}`}
-                    icon={<Icon id={service.id} open={open} />} placeholder={undefined} onResize={undefined} onResizeCapture={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}              >
-                <AccordionHeader onClick={() => handleOpen(service.id)} className={`text-2xl cursor-pointer ${open === service.id ? "text-gray-300 font-semibold" : "text-white"}`} placeholder={undefined} onResize={undefined} onResizeCapture={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}                >
-                  {service.title}
-                </AccordionHeader>
-              </Accordion>
+            {services.map((service, index) => (
+              <>
+              <div key={service.id} ref={(el) => {serviceRefs.current[index] = el}} className="service-item">
+                <Accordion key={service.id} open={open === service.id} className={`mb-5 border-b-2 ${open === service.id ? "border-[#E74C3C]" : "border-[#3498DB]"}`}
+                  icon={<Icon id={service.id} open={open} />} placeholder={undefined} onResize={undefined} onResizeCapture={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}              >
+                  <AccordionHeader onClick={() => handleOpen(service.id)} className={`text-2xl cursor-pointer ${open === service.id ? "text-gray-300 font-semibold" : "text-white"}`} placeholder={undefined} onResize={undefined} onResizeCapture={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}                >
+                    {service.title}
+                  </AccordionHeader>
+                </Accordion>
+              </div>
+              </>
+              
             ))}
           </div>
 
           {/*Accordion Body*/}
-          <div className="bg-[#1c1c1c] p-6 rounded-md border border-[#3498DB] min-h-[150px] col-span-3">
+          <div ref={bodyRef} className="bg-[#1c1c1c] p-6 rounded-md border border-[#3498DB] min-h-[150px] col-span-3">
             {open !== 0 ? (
                 (() => {
                     const selected = services.find((s) => s.id === open);

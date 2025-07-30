@@ -52,7 +52,7 @@ body {
 }
 
 .hamburger {
-  @apply hidden flex-col cursor-pointer px-3 py-3 justify-center items-center bg-[#00CBA3] rounded;
+  @apply hidden flex-col cursor-pointer px-3 py-3 justify-center items-center bg-black rounded;
 }
 
 .hamburger span {
@@ -83,7 +83,7 @@ body {
         @apply flex-col relative w-full;
     }
     .navbar ul {
-        @apply hidden flex-col order-2 absolute w-full top-full left-0 right-0 bg-[#F5F5F5] z-50 shadow-md px-4 mt-1;
+        @apply hidden flex-col order-2 absolute w-full top-full left-0 right-0 bg-black z-50 shadow-md px-4 mt-1;
     }
 
     .navbar ul.active {

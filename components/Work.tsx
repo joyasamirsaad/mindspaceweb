@@ -1,5 +1,5 @@
-//"use client"
-//import React, { useEffect, useState } from 'react';
+"use client";
+import { useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Card from '../components/Card';
 
@@ -19,7 +19,36 @@ interface ProjectsListProps {
   projects: Project[];
 }
 
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
+
 function ProjectsList({ projects }: ProjectsListProps) {
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    cardsRef.current.forEach((el) => {
+      if (el) {
+        gsap.fromTo(
+          el,
+          { opacity: 0, scale: 0.8, zIndex: 1 },
+          {
+            opacity: 1,
+            scale: 1,
+            zIndex: 10,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+    });
+  }, [projects]);
+
   //const [projects, setProjects] = useState<Project[]>([]);
 
   /*useEffect(() => {
@@ -35,18 +64,19 @@ function ProjectsList({ projects }: ProjectsListProps) {
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-5">
-        {projects.map((project) => (
-          <Link href={`/project/${project.id}`} className="cursor-pointer" key={project.id}>
+      {projects.map((project, idx) => (
+        <Link href={`/project/${project.id}`} className="cursor-pointer" key={project.id}>
+          <div ref={el => { cardsRef.current[idx] = el; }}>
             <Card
-                key={project.id}
-                imageUrl={project.image || "grayimg.jpg"}
-                imageAlt={project.title}
-                title={project.title}
-                desc={project.description || "No description available"}
+              key={project.id}
+              imageUrl={project.image || "grayimg.jpg"}
+              imageAlt={project.title}
+              title={project.title}
+              desc={project.description || "No description available"}
             />
-          </Link>
-            
-        ))}
+          </div>
+        </Link>
+      ))}
     </section>
   );
 }
