@@ -1,12 +1,15 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Card from "../../../../components/Card";
 import { Project } from "../../../../types/project";
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
 {/*interface Project {
   id: number;
@@ -21,6 +24,7 @@ import { Project } from "../../../../types/project";
 }*/}
 
 export default function ProjectPage() {
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [project, setProject] = useState<Project | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
@@ -74,7 +78,30 @@ export default function ProjectPage() {
   }
 }, [swiper]);
 
+useEffect(() => {
+    cardsRef.current.forEach((el) => {
+      if (el) {
+        gsap.fromTo(
+          el,
+          { opacity: 0, scale: 0.8, zIndex: 1 },
+          {
+            opacity: 1,
+            scale: 1,
+            zIndex: 10,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+    });
+  }, [projects]);
 
+  
   if (project === null) return <div className="flex justify-center items-center h-screen bg-black">
       <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
     </div>;
@@ -89,6 +116,7 @@ export default function ProjectPage() {
   const relatedProjects = projects
     .filter((relatedProject) => relatedProject.id !== project.id && relatedProject.id !== prev?.id && relatedProject.id !== next?.id)
     .slice(0, 3)
+
 
   return (
     <div className="bg-black text-white">
@@ -163,15 +191,17 @@ export default function ProjectPage() {
             }}
             >
               {relatedProjects
-                .map((relatedProject) => (
+                .map((relatedProject, idx) => (
                   <SwiperSlide key={relatedProject.id}>
                     <Link href={`/project/${relatedProject.id}`} key={relatedProject.id} className="cursor-pointer">
+                    <div ref={el => { cardsRef.current[idx] = el; }}>
                       <Card
                         imageUrl={relatedProject.image || "grayimg.jpg"}
                         imageAlt={relatedProject.title}
                         title={relatedProject.title}
                         desc={relatedProject.description || "No description available"}
                       />
+                      </div>
                     </Link>
                   </SwiperSlide>
                 ))}

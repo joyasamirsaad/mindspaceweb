@@ -71,23 +71,24 @@ body {
     @apply -rotate-45 relative -top-2;
 }
 
-#menu-overlay.active {
+.menu-overlay {
+    @apply hidden fixed top-0 left-0 w-screen h-screen bg-black z-40;
+}
+.menu-overlay.active {
     @apply block;
 }
 
 @media screen and (max-width: 1024px) {
     .hamburger {
-        @apply flex order-1;
+        @apply flex order-1 z-60 relative;
     }
-    .navbar {
-        @apply flex-col relative w-full;
-    }
+    
     .navbar ul {
-        @apply hidden flex-col order-2 absolute w-full top-full left-0 right-0 bg-black z-50 shadow-md px-4 mt-1;
+        @apply hidden flex-col order-2 fixed top-0 left-0 w-screen h-screen bg-black z-50 shadow-md px-4 pt-24;
     }
 
     .navbar ul.active {
-        @apply flex;
+        @apply flex items-center justify-center;
     }
 
     .navbar li {

@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import gsap from 'gsap';
 
 export default function Header() {
     const pathname = usePathname();
@@ -19,16 +20,25 @@ export default function Header() {
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
         overlay?.classList.toggle('active');
-        overlay?.classList.remove('active');
+        const links = document.querySelectorAll(".navbar ul li");
+            gsap.from(links, {
+            duration: 0.5,
+            x: 100,       
+            opacity: 0,
+            stagger: 0.1,
+            ease: "power3.out"
+        });
         };
 
         const closeMenu = () => {
         hamburger.classList.remove('active');
         navMenu.classList.remove('active');
+        overlay?.classList.remove('active');
         };
 
         // Toggle mobile menu on hamburger click
         hamburger.addEventListener('click', toggleMenu);
+        overlay?.addEventListener('click', closeMenu);
 
         // Close menu when clicking on any navbar link
         const navLinks = document.querySelectorAll('.navbar a');
@@ -47,6 +57,7 @@ export default function Header() {
         // Cleanup event listeners on unmount
         return () => {
         hamburger.removeEventListener('click', toggleMenu);
+        overlay?.removeEventListener('click', closeMenu);
         navLinks.forEach(link => {
             link.removeEventListener('click', closeMenu);
         });
@@ -57,9 +68,10 @@ export default function Header() {
 
 return (
     <div className="bg-black">
+        <div id="menu-overlay" className="menu-overlay"></div>
         <header className="container mx-auto px-4 md:px-20">
             <div className="flex flex-row items-center justify-between"> {/*navbar*/}
-                <div className="flex justify-start">
+                <div className="flex justify-start z-60">
                     <img className="logo" src="/logo.png" alt="job search logo"></img>
                 </div>
                 <nav className="navbar text-xl">
@@ -69,7 +81,7 @@ return (
                             <span className="!w-5"></span>
                             <span></span>
                         </div>
-
+    
                         <ul>
                             <li><Link href="/news" className={isActive("/news") ? "active-link" : ""}>news</Link></li>
                             <li><Link href="/work" className={isActive("/work") ? "active-link" : ""}>our work</Link></li>

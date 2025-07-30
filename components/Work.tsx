@@ -2,6 +2,9 @@
 import { useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Card from '../components/Card';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
 interface Project {
   id: number;
@@ -18,10 +21,6 @@ interface Project {
 interface ProjectsListProps {
   projects: Project[];
 }
-
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-gsap.registerPlugin(ScrollTrigger);
 
 function ProjectsList({ projects }: ProjectsListProps) {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -67,6 +66,7 @@ function ProjectsList({ projects }: ProjectsListProps) {
       {projects.map((project, idx) => (
         <Link href={`/project/${project.id}`} className="cursor-pointer" key={project.id}>
           <div ref={el => { cardsRef.current[idx] = el; }}>
+
             <Card
               key={project.id}
               imageUrl={project.image || "grayimg.jpg"}
