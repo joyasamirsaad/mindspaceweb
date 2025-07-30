@@ -28,12 +28,18 @@ export default function Header() {
             stagger: 0.1,
             ease: "power3.out"
         });
+        if (navMenu.classList.contains('active')) {
+            document.body.classList.add('overflow-hidden');
+        } else {
+            document.body.classList.remove('overflow-hidden');
+        }
         };
 
         const closeMenu = () => {
         hamburger.classList.remove('active');
         navMenu.classList.remove('active');
         overlay?.classList.remove('active');
+        document.body.classList.remove('overflow-hidden');
         };
 
         // Toggle mobile menu on hamburger click
