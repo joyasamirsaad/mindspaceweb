@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
 import Banner from '../../components/Banner';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
 interface Project {
   id: number;
@@ -35,6 +37,18 @@ export default function Home() {
   // Animate cards when displayedProjects changes
   useEffect(() => {
     if (cardsRef.current && cardsRef.current.length > 0) {
+      gsap.fromTo(
+        '.box',
+        { y: 100, opacity: 0 }, // start lower and slightly faded
+        {
+          scrollTrigger: '.box', // start animation when ".box" enters the viewport
+          duration: 0.7,
+          y: 0, // moves up to its original position
+          //y: -40, // moves up by 100px total (from 60 to -40)
+          opacity: 1,
+          ease: 'power3.out',
+        }
+      );
       gsap.fromTo(
         cardsRef.current,
         { opacity: 0, y: 40 },
@@ -81,7 +95,7 @@ export default function Home() {
 
         <h1 className="text-2xl md:text-4xl font-bold mb-6 flex items-center justify-center">Featured Work</h1>
         <div className="text-right"><Link href="/work" className="text-gray-300 hover:underline hover:text-white">All Work </Link><i className="fa-solid fa-arrow-up-right-from-square"></i></div>
-        <section className="grid grid-cols-8 gap-4 mt-5">
+        <section className="grid grid-cols-8 gap-4 mt-5 box">
           <div className="flex flex-col items-center col-span-2">
             {displayedProjects.map((project, idx) => (
               <button
@@ -139,11 +153,7 @@ function SelectedProjectDisplay({ image, title }: { image: string | null; title:
   }, [image, title]);
   return (
     <div ref={containerRef} className="w-full h-full bg-cover bg-center flex items-center justify-center transition-transform duration-1000 ease-out hover:scale-110" style={{ backgroundImage: `url(${image || '/grayimg.jpg'})` }}>
-      <h2 className="text-2xl font-semibold">
-        {title.split(' ').map((word, i) => (
-          <span key={i} className="inline-block mx-1">{word}</span>
-        ))}
-      </h2>
+      <h2 className="text-2xl font-semibold">{title}</h2>
     </div>
   );
 }
