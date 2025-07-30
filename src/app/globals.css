@@ -98,6 +98,17 @@ body {
     .navbar a {
         @apply text-lg block py-2.5 px-2;
     }
+
+    .dropdown ul {
+        @apply hidden flex-col right-0;
+    }
+
+    .dropdown ul.active {
+        @apply flex flex-col;
+    }
+    .dropdown a {
+        @apply text-lg block py-2.5 px-2;
+    }
 }
 
 .active-link {
@@ -107,6 +118,14 @@ body {
 .active-link:hover {
   @apply border-b-2 border-[#E74C3C];
 }
+
+.dropdown ul {
+  @apply hidden flex-col;
+}
+.dropdown ul.active {
+  @apply flex flex-col md:min-w-10 md:right-0 items-center justify-center;
+}
+
 
 .banner {
     @apply flex flex-col justify-center items-center text-center px-5 py-25 min-h-150 break-words;

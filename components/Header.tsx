@@ -13,9 +13,41 @@ export default function Header() {
         const hamburger = document.querySelector('.hamburger') as HTMLElement | null;
         const navMenu = document.querySelector('.navbar ul') as HTMLElement | null;
         const overlay = document.getElementById('menu-overlay');
+        const dropdown = document.querySelector('.dropdown') as HTMLElement | null;
+        const dropdownMenu = document.querySelector('.dropdown ul') as HTMLElement | null;
 
         if (!hamburger || !navMenu) return;
+        if (!dropdown || !dropdownMenu) return;
 
+        const toggleDropdown = () => {
+            dropdown.classList.toggle('active');
+            dropdownMenu.classList.toggle('active');
+            gsap.fromTo(dropdownMenu, {
+                opacity: 0,
+                y: -20,
+            }, {
+                opacity: 1,
+                y: 0,
+                duration: 0.3,
+                ease: "power3.out",
+            });
+        }
+        const closeDropdown = () => {
+            dropdown.classList.remove('active');
+            dropdownMenu.classList.remove('active');
+        }
+        const dropLinks = document.querySelectorAll('.dropdown a');
+        dropLinks.forEach(link => {
+        link.addEventListener('click', closeDropdown);
+        });
+        const drophandleClickOutside = (e: MouseEvent) => {
+        if (!dropdown.contains(e.target as Node) && !dropdownMenu.contains(e.target as Node)) {
+            closeDropdown();
+        }
+        };
+        document.addEventListener('click', drophandleClickOutside);
+
+        dropdown.addEventListener('click', toggleDropdown);
         const toggleMenu = () => {
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
@@ -28,11 +60,11 @@ export default function Header() {
             stagger: 0.1,
             ease: "power3.out"
         });
-        if (navMenu.classList.contains('active')) {
+        /*if (navMenu.classList.contains('active')) {
             document.body.classList.add('overflow-hidden');
         } else {
             document.body.classList.remove('overflow-hidden');
-        }
+        }*/
         };
 
         const closeMenu = () => {
@@ -94,11 +126,11 @@ return (
                             <li><Link href="/services" className={isActive("/services") ? "active-link" : ""}>our services</Link></li>
                             <li><Link href="/team" className={isActive("/team") ? "active-link" : ""}>our team</Link></li>
                             <li><Link href="/contact" className={isActive("/contact") ? "active-link" : ""}>contact us</Link></li>
-                            <li className="relative group text-gray-300 hover:text-white">
+                            <li className="relative text-gray-300 hover:text-white dropdown z-70">
                                 <span className="cursor-pointer flex items-center">
                                     more <i className="fa-solid fa-chevron-down ml-1"></i>
                                 </span>
-                                <ul className="absolute opacity-0 group-hover:opacity-100 group-hover:flex group-hover:flex-col right-0 bg-black rounded-md border-2 border-gray-300 mt-2 min-w-10 z-50">
+                                <ul className="absolute bg-black text-white rounded-md border-2 border-gray-300 mt-2">
                                     <li className="px-4 py-2"><Link href="/events">events</Link></li>
                                     <li className="px-4 py-2"><Link href="/playlist">playlists</Link></li>
                                     <li className="px-4 py-2"><Link href="/favorites">favorites</Link></li>
