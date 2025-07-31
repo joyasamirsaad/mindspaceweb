@@ -8,7 +8,7 @@ import gsap from 'gsap';
 export default function Header() {
     const pathname = usePathname();
     const router = useRouter();
-    const [isPending, startTransition] = useTransition();
+    //const [isPending, startTransition] = useTransition();
     //const normalizePath = (path: string) => path.replace(/\/$/, "");
     const isActive = (href: string) => {
         const pathWithoutLocale = pathname.split('/').slice(2).join('/') || '';
@@ -20,29 +20,29 @@ export default function Header() {
     const localeFromPath = pathname.split('/')[1];
     const [currentLocale, setCurrentLocale] = useState('en');
 
-  // Update currentLocale whenever pathname changes
-  useEffect(() => {
-    const localeFromPath = pathname.split('/')[1];
-    setCurrentLocale(supportedLocales.includes(localeFromPath) ? localeFromPath : 'en');
-  }, [pathname]);
+    // Update currentLocale whenever pathname changes
+    useEffect(() => {
+        const localeFromPath = pathname.split('/')[1];
+        setCurrentLocale(supportedLocales.includes(localeFromPath) ? localeFromPath : 'en');
+    }, [pathname]);
 
-  const newLocale = currentLocale === 'en' ? 'ar' : 'en';
+    const newLocale = currentLocale === 'en' ? 'ar' : 'en';
 
-  const handleToggle = () => {
-    const segments = pathname.split('/');
-    segments[1] = newLocale; // replace locale
-    const newPath = segments.join('/');
-    router.push(newPath);
-  };
-useEffect(() => {
-  if (currentLocale === 'ar') {
-    document.documentElement.setAttribute('dir', 'rtl');
-    document.documentElement.setAttribute('lang', 'ar');
-  } else {
-    document.documentElement.setAttribute('dir', 'ltr');
-    document.documentElement.setAttribute('lang', 'en');
-  }
-}, [currentLocale]);
+    const handleToggle = () => {
+        const segments = pathname.split('/');
+        segments[1] = newLocale; // replace locale
+        const newPath = segments.join('/');
+        router.push(newPath);
+    };
+    useEffect(() => {
+        if (currentLocale === 'ar') {
+            document.documentElement.setAttribute('dir', 'rtl');
+            document.documentElement.setAttribute('lang', 'ar');
+        } else {
+            document.documentElement.setAttribute('dir', 'ltr');
+            document.documentElement.setAttribute('lang', 'en');
+        }
+    }, [currentLocale]);
 
     useEffect(() => {
         const hamburger = document.querySelector('.hamburger') as HTMLElement | null;
