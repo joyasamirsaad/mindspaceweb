@@ -1,13 +1,48 @@
 "use client";
 import Link from 'next/link';
-import { useEffect } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { usePathname } from "next/navigation";
+import { useRouter } from 'next/navigation';
 import gsap from 'gsap';
 
 export default function Header() {
     const pathname = usePathname();
-    const normalizePath = (path: string) => path.replace(/\/$/, "");
-    const isActive = (href: string) => normalizePath(pathname) === normalizePath(href);
+    const router = useRouter();
+    const [isPending, startTransition] = useTransition();
+    //const normalizePath = (path: string) => path.replace(/\/$/, "");
+    const isActive = (href: string) => {
+        const pathWithoutLocale = pathname.split('/').slice(2).join('/') || '';
+        const hrefWithoutSlash = href.replace(/^\/+/, ''); // remove leading slash
+        return pathWithoutLocale === hrefWithoutSlash;
+    };
+
+    const supportedLocales = ['en', 'ar'];
+    const localeFromPath = pathname.split('/')[1];
+    const [currentLocale, setCurrentLocale] = useState('en');
+
+  // Update currentLocale whenever pathname changes
+  useEffect(() => {
+    const localeFromPath = pathname.split('/')[1];
+    setCurrentLocale(supportedLocales.includes(localeFromPath) ? localeFromPath : 'en');
+  }, [pathname]);
+
+  const newLocale = currentLocale === 'en' ? 'ar' : 'en';
+
+  const handleToggle = () => {
+    const segments = pathname.split('/');
+    segments[1] = newLocale; // replace locale
+    const newPath = segments.join('/');
+    router.push(newPath);
+  };
+useEffect(() => {
+  if (currentLocale === 'ar') {
+    document.documentElement.setAttribute('dir', 'rtl');
+    document.documentElement.setAttribute('lang', 'ar');
+  } else {
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', 'en');
+  }
+}, [currentLocale]);
 
     useEffect(() => {
         const hamburger = document.querySelector('.hamburger') as HTMLElement | null;
@@ -40,12 +75,6 @@ export default function Header() {
         dropLinks.forEach(link => {
         link.addEventListener('click', closeDropdown);
         });
-        const drophandleClickOutside = (e: MouseEvent) => {
-        if (!dropdown.contains(e.target as Node) && !dropdownMenu.contains(e.target as Node)) {
-            closeDropdown();
-        }
-        };
-        document.addEventListener('click', drophandleClickOutside);
 
         dropdown.addEventListener('click', toggleDropdown);
         const toggleMenu = () => {
@@ -60,11 +89,11 @@ export default function Header() {
             stagger: 0.1,
             ease: "power3.out"
         });
-        /*if (navMenu.classList.contains('active')) {
+        if (navMenu.classList.contains('active')) {
             document.body.classList.add('overflow-hidden');
         } else {
             document.body.classList.remove('overflow-hidden');
-        }*/
+        }
         };
 
         const closeMenu = () => {
@@ -89,7 +118,13 @@ export default function Header() {
         if (!hamburger.contains(e.target as Node) && !navMenu.contains(e.target as Node)) {
             closeMenu();
         }
+
+        if (!dropdown.contains(e.target as Node) && !dropdownMenu.contains(e.target as Node)) {
+            closeDropdown();
+        }
         };
+        document.addEventListener('click', handleClickOutside);
+
         document.addEventListener('click', handleClickOutside);
 
         // Cleanup event listeners on unmount
@@ -121,20 +156,36 @@ return (
                         </div>
     
                         <ul>
-                            <li><Link href="/news" className={isActive("/news") ? "active-link" : ""}>news</Link></li>
-                            <li><Link href="/work" className={isActive("/work") ? "active-link" : ""}>our work</Link></li>
-                            <li><Link href="/services" className={isActive("/services") ? "active-link" : ""}>our services</Link></li>
-                            <li><Link href="/team" className={isActive("/team") ? "active-link" : ""}>our team</Link></li>
-                            <li><Link href="/contact" className={isActive("/contact") ? "active-link" : ""}>contact us</Link></li>
+                            <li><Link href={`/${currentLocale}/`} className={isActive("/") ? "active-link" : ""}>home</Link></li>
+                            <li><Link href={`/${currentLocale}/news`} className={isActive("/news") ? "active-link" : ""}>news</Link></li>
+                            <li><Link href={`/${currentLocale}/work`} className={isActive("/work") ? "active-link" : ""}>our work</Link></li>
+                            <li><Link href={`/${currentLocale}/services`} className={isActive("/services") ? "active-link" : ""}>our services</Link></li>
+                            <li><Link href={`/${currentLocale}/team`} className={isActive("/team") ? "active-link" : ""}>our team</Link></li>
+                            <li><Link href={`/${currentLocale}/contact`} className={isActive("/contact") ? "active-link" : ""}>contact us</Link></li>
                             <li className="relative text-gray-300 hover:text-white dropdown z-70">
-                                <span className="cursor-pointer flex items-center">
-                                    more <i className="fa-solid fa-chevron-down ml-1"></i>
+                                <span onClick={(e) => e.stopPropagation()} className="cursor-pointer flex items-center">
+                                    more <i className="fa-solid fa-chevron-down md:ml-1"></i>
                                 </span>
-                                <ul className="absolute bg-black text-white rounded-md border-2 border-gray-300 mt-2">
-                                    <li className="px-4 py-2"><Link href="/events">events</Link></li>
-                                    <li className="px-4 py-2"><Link href="/playlist">playlists</Link></li>
-                                    <li className="px-4 py-2"><Link href="/favorites">favorites</Link></li>
+                                <ul className="absolute bg-black text-white rounded-md border-2 border-gray-300 md:mt-2">
+                                    <li className="px-4 py-2"><Link href={`/${currentLocale}/events`}>events</Link></li>
+                                    <li className="px-4 py-2"><Link href={`/${currentLocale}/playlist`}>playlists</Link></li>
+                                    <li className="px-4 py-2"><Link href={`/${currentLocale}/favorites`}>favorites</Link></li>
                                 </ul>
+                            </li>
+                            <li>
+                                <div className="ml-6 flex items-center space-x-2">
+                                    <span className="text-sm text-gray-300">EN</span>
+                                    <button type='button'
+                                        onClick={handleToggle}
+                                        aria-label={`Switch language to ${currentLocale === 'ar'? 'English' : 'Arabic'}`}
+                                        className={`w-14 h-7 flex items-center bg-[#3498DB] rounded-full p-1 transition-colors duration-300 ${
+                                        currentLocale === 'ar' ? 'bg-[#E74C3C]' : 'bg-[#3498DB]'}`}>
+                                        <div
+                                            className={`w-5 h-5 bg-white rounded-full shadow-md transform duration-300 ${currentLocale === 'ar' ? 'right-1' : 'left-1'}`}>    
+                                        </div>
+                                    </button>
+                                    <span className="text-sm text-gray-300">AR</span>
+                                </div>
                             </li>
 
                         </ul>

@@ -50,11 +50,9 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import CustomCursor from "../../components/CustomCursor";
 
-export default async function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default async function RootLayout({ children, params }: { children: React.ReactNode, params: { locale: string } }) {
+  const locale = params.locale || 'en';
+
   const response = await fetch('https://hanzo.dxpshift.com/api/settings', { cache: 'no-store' });
   const data = await response.json();
 
@@ -64,7 +62,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="en">
+    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <head>
         <Script src="https://kit.fontawesome.com/9794455bd0.js" crossOrigin="anonymous" strategy="beforeInteractive"/>
       </head>

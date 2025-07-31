@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
+import { usePathname } from 'next/navigation';
 import {
   Accordion,
   AccordionHeader,
@@ -31,7 +32,7 @@ export default function Services() {
   const [open, setOpen] = React.useState(1);
   const serviceRefs = useRef<(HTMLDivElement | null)[]>([]);
   const bodyRef = useRef<HTMLDivElement | null>(null);
-
+  const pathname = usePathname();
 
   const services = [
     {
@@ -74,8 +75,8 @@ export default function Services() {
         }
     };
 
-  useLayoutEffect(() => {
-    gsap.context(() => {
+  useEffect(() => {
+    const ctx= gsap.context(() => {
       gsap.from(serviceRefs.current, {
         opacity: 0,
         y: 50,
@@ -92,13 +93,14 @@ export default function Services() {
         delay: services.length * 0.2 + 0.3, // delay to ensure the accordion body animates after the headers
       });
     });
+    return () => ctx.revert(); 
   }, [services.length]);
     
   return (
     <div className="bg-black text-white">
       <div className="container mx-auto px-4 md:px-20 py-20">
         <h1 className="text-2xl md:text-4xl font-bold mb-6">Our Services</h1>
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
+        <div key={`services-${open}`} className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
           {/*Accordion Header*/}
           <div className="col-span-2">
             {services.map((service, index) => (
