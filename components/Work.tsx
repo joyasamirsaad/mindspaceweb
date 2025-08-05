@@ -26,7 +26,6 @@ interface ProjectsListProps {
 function ProjectsList({ projects }: ProjectsListProps) {
   const params = useParams();
   const lang = params.lang as string;
-  //const isRTL = lang === 'ar';
 
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 

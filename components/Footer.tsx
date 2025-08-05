@@ -55,9 +55,9 @@ export default function Footer({ socialLinks }: FooterProps) {
                     </div>
                 </div>
                 <div className="flex flex-row items-center col-span-full md:col-start-9 md:col-span-2 whitespace-nowrap">
-                    <Link href="#" target="_blank" className={`${isActive("/#") ? "active-link" : ""} text-md hov`}>privacy policy</Link>
+                    <Link href="/privacy" className={`${isActive("/#") ? "active-link" : ""} text-md hov`}>privacy policy</Link>
                     <div className="border-l-2 mx-3 border-white h-5"></div>
-                    <Link href="#" target="_blank" className={`${isActive("/#") ? "active-link" : ""} text-md hov`}>terms of condition</Link>
+                    <Link href="/terms" className={`${isActive("/#") ? "active-link" : ""} text-md hov`}>terms of condition</Link>
                 </div>
             </footer>
         </div>
