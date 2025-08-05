@@ -9,7 +9,7 @@ import { useParams } from 'next/navigation';
 export default function Header() {
     const params = useParams();
     const lang = params.lang as string;
-    const isRTL = lang === 'ar';
+    //const isRTL = lang === 'ar';
 
     const pathname = usePathname();
     const router = useRouter();
@@ -48,6 +48,35 @@ export default function Header() {
             document.documentElement.setAttribute('lang', 'en');
         }
     }, [currentLocale]);
+
+    const translations = {
+        en: {
+            home: "home",
+            news: "news",
+            work: "our work",
+            services: "our services",
+            contact: "contact us",
+            more: "more",
+            events: "events",
+            playlists: "playlists",
+            favorites: "favorites",
+        },
+        ar: {
+            home: "الرئيسية",
+            news: "الأخبار",
+            work: "أعمالنا",
+            services: "خدماتنا",
+            contact: "اتصل بنا",
+            more: "المزيد",
+            events: "الفعاليات",
+            playlists: "قوائم التشغيل",
+            favorites: "المفضلة",
+        },
+    };
+
+    const t = translations[currentLocale as "en" | "ar"]; 
+    const isRTL = currentLocale === "ar";
+
 
     useEffect(() => {
         const hamburger = document.querySelector('.hamburger') as HTMLElement | null;
@@ -161,20 +190,20 @@ return (
                         </div>
     
                         <ul>
-                            <li><Link href={`/${currentLocale}/`} className={isActive("/") ? "active-link" : ""}>home</Link></li>
-                            <li><Link href={`/${currentLocale}/news`} className={isActive("/news") ? "active-link" : ""}>news</Link></li>
-                            <li><Link href={`/${currentLocale}/work`} className={isActive("/work") ? "active-link" : ""}>our work</Link></li>
-                            <li><Link href={`/${currentLocale}/services`} className={isActive("/services") ? "active-link" : ""}>our services</Link></li>
+                            <li><Link href={`/${currentLocale}/`} className={isActive("/") ? "active-link" : ""}>{t.home}</Link></li>
+                            <li><Link href={`/${currentLocale}/news`} className={isActive("/news") ? "active-link" : ""}>{t.news}</Link></li>
+                            <li><Link href={`/${currentLocale}/work`} className={isActive("/work") ? "active-link" : ""}>{t.work}</Link></li>
+                            <li><Link href={`/${currentLocale}/services`} className={isActive("/services") ? "active-link" : ""}>{t.services}</Link></li>
                             {/*<li><Link href={`/${currentLocale}/team`} className={isActive("/team") ? "active-link" : ""}>our team</Link></li>*/}
-                            <li><Link href={`/${currentLocale}/contact`} className={isActive("/contact") ? "active-link" : ""}>contact us</Link></li>
+                            <li><Link href={`/${currentLocale}/contact`} className={isActive("/contact") ? "active-link" : ""}>{t.contact}</Link></li>
                             <li className="relative text-gray-300 hover:text-white dropdown z-70">
                                 <span onClick={(e) => e.stopPropagation()} className="cursor-pointer flex items-center">
-                                    more <i className={`fa-solid fa-chevron-down ${isRTL ? 'mr-1' : 'ml-1'} md:ml-1`}></i>
+                                    {t.more}<i className={`fa-solid fa-chevron-down ${isRTL ? 'mr-1' : 'ml-1'} md:ml-1`}></i>
                                 </span>
                                 <ul className="absolute bg-black text-white rounded-md border-2 border-gray-300 md:mt-2">
-                                    <li className="px-4 py-2"><Link href={`/${currentLocale}/events`}>events</Link></li>
-                                    <li className="px-4 py-2"><Link href={`/${currentLocale}/playlist`}>playlists</Link></li>
-                                    <li className="px-4 py-2"><Link href={`/${currentLocale}/favorites`}>favorites</Link></li>
+                                    <li className="px-4 py-2"><Link href={`/${currentLocale}/events`}>{t.events}</Link></li>
+                                    <li className="px-4 py-2"><Link href={`/${currentLocale}/playlist`}>{t.playlists}</Link></li>
+                                    <li className="px-4 py-2"><Link href={`/${currentLocale}/favorites`}>{t.favorites}</Link></li>
                                 </ul>
                             </li>
                             <li>
