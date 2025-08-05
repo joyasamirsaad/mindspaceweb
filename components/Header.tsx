@@ -4,11 +4,16 @@ import { useEffect, useState, useTransition } from "react";
 import { usePathname } from "next/navigation";
 import { useRouter } from 'next/navigation';
 import gsap from 'gsap';
+import { useParams } from 'next/navigation';
 
 export default function Header() {
+    const params = useParams();
+    const lang = params.lang as string;
+    const isRTL = lang === 'ar';
+
     const pathname = usePathname();
     const router = useRouter();
-    const [isPending, startTransition] = useTransition();
+    //const [isPending, startTransition] = useTransition();
     //const normalizePath = (path: string) => path.replace(/\/$/, "");
     const isActive = (href: string) => {
         const pathWithoutLocale = pathname.split('/').slice(2).join('/') || '';
@@ -20,29 +25,29 @@ export default function Header() {
     const localeFromPath = pathname.split('/')[1];
     const [currentLocale, setCurrentLocale] = useState('en');
 
-  // Update currentLocale whenever pathname changes
-  useEffect(() => {
-    const localeFromPath = pathname.split('/')[1];
-    setCurrentLocale(supportedLocales.includes(localeFromPath) ? localeFromPath : 'en');
-  }, [pathname]);
+    // Update currentLocale whenever pathname changes
+    useEffect(() => {
+        const localeFromPath = pathname.split('/')[1];
+        setCurrentLocale(supportedLocales.includes(localeFromPath) ? localeFromPath : 'en');
+    }, [pathname]);
 
-  const newLocale = currentLocale === 'en' ? 'ar' : 'en';
+    const newLocale = currentLocale === 'en' ? 'ar' : 'en';
 
-  const handleToggle = () => {
-    const segments = pathname.split('/');
-    segments[1] = newLocale; // replace locale
-    const newPath = segments.join('/');
-    router.push(newPath);
-  };
-useEffect(() => {
-  if (currentLocale === 'ar') {
-    document.documentElement.setAttribute('dir', 'rtl');
-    document.documentElement.setAttribute('lang', 'ar');
-  } else {
-    document.documentElement.setAttribute('dir', 'ltr');
-    document.documentElement.setAttribute('lang', 'en');
-  }
-}, [currentLocale]);
+    const handleToggle = () => {
+        const segments = pathname.split('/');
+        segments[1] = newLocale; // replace locale
+        const newPath = segments.join('/');
+        router.push(newPath);
+    };
+    useEffect(() => {
+        if (currentLocale === 'ar') {
+            document.documentElement.setAttribute('dir', 'rtl');
+            document.documentElement.setAttribute('lang', 'ar');
+        } else {
+            document.documentElement.setAttribute('dir', 'ltr');
+            document.documentElement.setAttribute('lang', 'en');
+        }
+    }, [currentLocale]);
 
     useEffect(() => {
         const hamburger = document.querySelector('.hamburger') as HTMLElement | null;
@@ -160,11 +165,11 @@ return (
                             <li><Link href={`/${currentLocale}/news`} className={isActive("/news") ? "active-link" : ""}>news</Link></li>
                             <li><Link href={`/${currentLocale}/work`} className={isActive("/work") ? "active-link" : ""}>our work</Link></li>
                             <li><Link href={`/${currentLocale}/services`} className={isActive("/services") ? "active-link" : ""}>our services</Link></li>
-                            <li><Link href={`/${currentLocale}/team`} className={isActive("/team") ? "active-link" : ""}>our team</Link></li>
+                            {/*<li><Link href={`/${currentLocale}/team`} className={isActive("/team") ? "active-link" : ""}>our team</Link></li>*/}
                             <li><Link href={`/${currentLocale}/contact`} className={isActive("/contact") ? "active-link" : ""}>contact us</Link></li>
                             <li className="relative text-gray-300 hover:text-white dropdown z-70">
                                 <span onClick={(e) => e.stopPropagation()} className="cursor-pointer flex items-center">
-                                    more <i className="fa-solid fa-chevron-down md:ml-1"></i>
+                                    more <i className={`fa-solid fa-chevron-down ${isRTL ? 'mr-1' : 'ml-1'} md:ml-1`}></i>
                                 </span>
                                 <ul className="absolute bg-black text-white rounded-md border-2 border-gray-300 md:mt-2">
                                     <li className="px-4 py-2"><Link href={`/${currentLocale}/events`}>events</Link></li>

@@ -3,8 +3,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import gsap from 'gsap';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-
 import Card from '../components/Card';
+import { useParams } from 'next/navigation';
 
 interface News {
   title: string;
@@ -19,6 +19,11 @@ interface NewsListProps {
 }
 
 function NewsList({ news }: NewsListProps) {
+    const params = useParams();
+    const lang = params.lang as string;
+    const isRTL = lang === 'ar';
+
+
     const [swiper, setSwiper] = useState<SwiperClass | null>(null);
     const [atEnd, setAtEnd] = useState(false);
     const [atStart, setAtStart] = useState(true);
@@ -116,7 +121,7 @@ function NewsList({ news }: NewsListProps) {
                         : 'bg-[#d3d3d3] hover:bg-[#E74C3C]'
                     }`}
             >
-                <i className="fas fa-arrow-left text-white text-sm"></i>
+                <i className={`fas ${isRTL ? 'fa-arrow-right' : 'fa-arrow-left'} text-white text-sm`} />
             </button>
 
             <button
@@ -129,7 +134,7 @@ function NewsList({ news }: NewsListProps) {
                         : 'bg-[#d3d3d3] hover:bg-[#3498DB]'
                     }`}
             >
-                <i className="fas fa-arrow-right text-white text-sm"></i>
+                <i className={`fas ${isRTL ? 'fa-arrow-left' : 'fa-arrow-right'} text-white text-sm`} />
             </button>
         </div>
         </>

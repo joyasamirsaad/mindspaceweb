@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Script from 'next/script';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import CustomCursor from "../../components/CustomCursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,13 +48,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import CustomCursor from "../../components/CustomCursor";
-
-export default async function RootLayout({ children, params }: { children: React.ReactNode, params: { locale: string } }) {
-  const locale = params.locale || 'en';
+export default async function RootLayout({ children, params }: { children: React.ReactNode, params: { lang: string } }) {
+  const { lang } = params;
 
   const response = await fetch('https://hanzo.dxpshift.com/api/settings', { cache: 'no-store' });
   const data = await response.json();
@@ -62,7 +60,7 @@ export default async function RootLayout({ children, params }: { children: React
   };
 
   return (
-    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+    <html lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
       <head>
         <Script src="https://kit.fontawesome.com/9794455bd0.js" crossOrigin="anonymous" strategy="beforeInteractive"/>
       </head>
