@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { usePathname } from 'next/navigation';
 import {
   Accordion,
+  AccordionBody,
   AccordionHeader,
 } from "@material-tailwind/react";
 import { gsap } from "gsap";
@@ -43,21 +44,25 @@ export default function Services() {
     {
       id: 1,
       title: "Anim inventore lorem elit sunt",
+      description: "Ipsa esse non quis est laborum ullamco ad pariatur sunt eiusmod proident mollit dolore: Nulla nostrud velit architecto beatae anim unde beatae unde omnis...",
       content: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.",
     },
     {
       id: 2,
       title: "Laudantium tempor voluptate omnis",
+      description: "Quae tempor ipsa aute doloremque veniam tempor perspiciatis non error exercitation officia. Ea pariatur architecto ab consequat enim consectetur cupidatat iste dicta nostrud in architecto aliquip aute;",
       content: "Ut aperiam qui voluptatem accusantium perspiciatis nostrud in reprehenderit pariatur dolor in ea veniam? Rem voluptate unde dolor esse nisi labore est aliqua veniam magna ab inventore aute. Do id doloremque et iste duis deserunt ut architecto unde ipsum. Et proident architecto sint dolore quis dicta sit aperiam sunt ad; Cillum iste officia nulla perspiciatis fugiat ullamco ab consequat.",
     },
     {
       id: 3,
       title: "Sunt sed sunt laboris et mollit",
+      description: "Aliquip ad quasi mollit labore aliquip nostrud est illo exercitation ut rem vitae laboris.",
       content: "Nostrud elit et tempor eu explicabo sint amet id ut sed nulla ut fugiat beatae; Laudantium et laudantium irure et adipiscing consectetur... Sunt mollit totam ipsum error rem nisi duis consectetur sed. Omnis est laudantium mollit voluptate sit ipsa excepteur est adipiscing voluptatem et explicabo. Dolor doloremque dolore sunt consequat consectetur id explicabo lorem exercitation duis elit esse ea explicabo. Sunt rem irure in id elit adipiscing inventore... Anim in ab sed ipsum ipsum enim ullamco omnis ea;",
     },
     {
       id: 4,
       title: "Deserunt do ut",
+      description: "Vitae unde velit irure illo ea.",
       content: "Do doloremque tempor inventore esse ab beatae? Qui minim occaecat veritatis ut exercitation aute in deserunt est dicta labore. Aliqua consectetur id sit dolor ut eu incididunt elit deserunt dolor ut. Rem ad ipsa sunt deserunt do..."
     },
   ];
@@ -116,6 +121,11 @@ export default function Services() {
                   <AccordionHeader onClick={() => handleOpen(service.id)} className={`text-2xl cursor-pointer ${open === service.id ? "text-gray-300 font-semibold" : "text-white"}`} placeholder={undefined} onResize={undefined} onResizeCapture={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}                >
                     {service.title}
                   </AccordionHeader>
+                  <AccordionBody>
+                    <div className="flex text-gray-500 text-lg italic">
+                      <p>{service.description}</p>
+                    </div>
+                  </AccordionBody>
                 </Accordion>
               </div>
               </>
