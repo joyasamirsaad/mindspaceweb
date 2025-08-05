@@ -30,7 +30,6 @@ export default function ProjectPage() {
   const lang = params.lang as string;
   const isRTL = lang === 'ar';
   const url = typeof window !== 'undefined' ? window.location.href : '';
-  const title = "Check this out!";
   
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -182,10 +181,10 @@ useEffect(() => {
         }}
         >Share to Whatsapp<i className={`fa-brands fa-whatsapp ${isRTL ? 'mr-2' : 'ml-2'}`}></i></button></div>*/}
         <div className="flex items-center justify-center gap-2 mb-2">
-          <WhatsappShareButton url={url} title={`Check this out!\n\n${url}`}>
+          <WhatsappShareButton url={url} title={`Check this out!\n\n`}>
             <div className="flex items-center gap-2">
               <WhatsappIcon size={32} round />
-              <span>WhatsApp</span>
+              <span>Share on WhatsApp</span>
             </div>
           </WhatsappShareButton>
         </div>
