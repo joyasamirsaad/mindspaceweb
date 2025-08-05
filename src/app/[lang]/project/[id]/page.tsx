@@ -7,8 +7,10 @@ import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Card from "../../../../../components/Card";
 import { Project } from "../../../../../types/project";
+import { useParams } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { WhatsappShareButton, WhatsappIcon } from "react-share";
 gsap.registerPlugin(ScrollTrigger);
 
 {/*interface Project {
@@ -24,6 +26,12 @@ gsap.registerPlugin(ScrollTrigger);
 }*/}
 
 export default function ProjectPage() {
+  const params = useParams();
+  const lang = params.lang as string;
+  const isRTL = lang === 'ar';
+  const url = typeof window !== 'undefined' ? window.location.href : '';
+  const title = "Check this out!";
+  
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [project, setProject] = useState<Project | null>(null);
@@ -152,16 +160,34 @@ useEffect(() => {
       {/*buttons prev next*/}
         <div className="flex justify-between items-center">
           {prev ? (
-            <Link href={`/project/${prev.id}`} className="text-gray-300 hover:underline hover:text-white"><i className="fas fa-arrow-left text-sm"></i> {prev.title}</Link>
+            <Link href={`/${lang}/project/${prev.id}`} className="text-gray-300 hover:underline hover:text-white"><i className={`fas ${isRTL ? 'fa-arrow-right' : 'fa-arrow-left'} text-white text-sm`} /> {prev.title}</Link>
           ) : (
             <span></span>
           )}
 
           {next ? (
-            <Link href={`/project/${next.id}`} className="text-gray-300 hover:underline hover:text-white">{next.title} <i className="fas fa-arrow-right text-sm"></i></Link>
+            <Link href={`/${lang}/project/${next.id}`} className="text-gray-300 hover:underline hover:text-white">{next.title} <i className={`fas ${isRTL ? 'fa-arrow-left' : 'fa-arrow-right'} text-white text-sm`} /></Link>
           ) : (
             <span></span>
           )}
+        </div>
+        
+        {/*<div className="text-center"><button className="btn !bg-[#25D366] hover:!bg-white hover:!text-[#25D366]"
+        onClick={() => {
+          const currentUrl = encodeURIComponent(window.location.href);
+          {/*const whatsappNumber = "96103776161";
+          const message = `Check this out: ${currentUrl}`;
+          {/*window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank");
+          window.open(`https://wa.me/?text=${message}`, "_blank");
+        }}
+        >Share to Whatsapp<i className={`fa-brands fa-whatsapp ${isRTL ? 'mr-2' : 'ml-2'}`}></i></button></div>*/}
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <WhatsappShareButton url={url} title={`Check this out!\n\n${url}`}>
+            <div className="flex items-center gap-2">
+              <WhatsappIcon size={32} round />
+              <span>WhatsApp</span>
+            </div>
+          </WhatsappShareButton>
         </div>
 
         <div className="text-center"><Link href="/work" className="text-gray-300 hover:underline hover:text-white">Back to Work</Link></div>

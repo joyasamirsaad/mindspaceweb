@@ -2,6 +2,7 @@
 import { useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Card from '../components/Card';
+import { useParams } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
@@ -23,6 +24,10 @@ interface ProjectsListProps {
 }
 
 function ProjectsList({ projects }: ProjectsListProps) {
+  const params = useParams();
+  const lang = params.lang as string;
+  //const isRTL = lang === 'ar';
+
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -64,7 +69,7 @@ function ProjectsList({ projects }: ProjectsListProps) {
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-5">
       {projects.map((project, idx) => (
-        <Link href={`/project/${project.id}`} className="cursor-pointer" key={project.id}>
+        <Link href={`/${lang}/project/${project.id}`} className="cursor-pointer" key={project.id}>
           <div ref={el => { cardsRef.current[idx] = el; }}>
 
             <Card
