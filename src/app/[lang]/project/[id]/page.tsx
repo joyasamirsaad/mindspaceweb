@@ -10,7 +10,7 @@ import { Project } from "../../../../../types/project";
 import { useParams } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { WhatsappShareButton, WhatsappIcon } from "react-share";
+import { WhatsappShareButton, WhatsappIcon, FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon } from "react-share";
 gsap.registerPlugin(ScrollTrigger);
 
 {/*interface Project {
@@ -30,6 +30,8 @@ export default function ProjectPage() {
   const lang = params.lang as string;
   const isRTL = lang === 'ar';
   const url = typeof window !== 'undefined' ? window.location.href : '';
+
+  const [showSocials, setShowSocials] = useState(false);
   
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -180,13 +182,37 @@ useEffect(() => {
           window.open(`https://wa.me/?text=${message}`, "_blank");
         }}
         >Share to Whatsapp<i className={`fa-brands fa-whatsapp ${isRTL ? 'mr-2' : 'ml-2'}`}></i></button></div>*/}
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <WhatsappShareButton url={url} title={`Check this out!\n\n`}>
-            <div className="flex items-center gap-2">
-              <WhatsappIcon size={32} round />
-              <span>Share on WhatsApp</span>
-            </div>
-          </WhatsappShareButton>
+
+        <div className="flex flex-col md:flex-row items-center justify-center">
+          <button className="btn" onClick={() => setShowSocials((prev) => !prev)}>
+            <i className={`fa-regular fa-paper-plane text-[#fff8f0] ${isRTL ? 'ml-2' : 'mr-2'}`}></i>Share Project
+          </button>
+          <div className={`
+          flex items-center gap-2 mb-2
+          transition-all duration-500 ease-in-out
+          overflow-hidden
+          ${showSocials ? "max-w-[400px] ml-4" : "max-w-0 ml-0"}
+        `}
+        style={{ whiteSpace: "nowrap" }}>
+            <WhatsappShareButton url={url} title={`Check this out!\n\n`}>
+              <div className="flex items-center gap-2">
+                <WhatsappIcon size={32} round />
+                <span>WhatsApp</span>
+              </div>
+            </WhatsappShareButton>
+            <FacebookShareButton url={url} title={`Check this out!\n\n`}>
+              <div className="flex items-center gap-2">
+                <FacebookIcon size={32} round />
+                <span>Facebook</span>
+              </div>
+            </FacebookShareButton>
+            <TwitterShareButton url={url} title={`Check this out!\n\n`}>
+              <div className="flex items-center gap-2">
+                <TwitterIcon size={32} round />
+                <span>Twitter / X</span> 
+              </div>
+            </TwitterShareButton>
+          </div>
         </div>
 
         <div className="text-center"><Link href="/work" className="text-gray-300 hover:underline hover:text-white">Back to Work</Link></div>
