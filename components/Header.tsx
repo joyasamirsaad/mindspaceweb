@@ -178,8 +178,8 @@ return (
         <div id="menu-overlay" className="menu-overlay"></div>
         <header className="container mx-auto px-4 md:px-20">
             <div className="flex flex-row items-center justify-between"> {/*navbar*/}
-                <div className="flex justify-start z-60">
-                    <img className="logo" src="/logo.png" alt="job search logo"></img>
+                <div className="flex justify-start z-70">
+                    <Link href={`/${currentLocale}/`}><img className="logo" src="/logo.png" alt="job search logo"></img></Link>
                 </div>
                 <nav className="navbar text-xl">
                     <div className="w-fit ml-auto">
@@ -190,7 +190,7 @@ return (
                         </div>
     
                         <ul>
-                            <li><Link href={`/${currentLocale}/`} className={isActive("/") ? "active-link" : ""}>{t.home}</Link></li>
+                            {/*<li><Link href={`/${currentLocale}/`} className={isActive("/") ? "active-link" : ""}>{t.home}</Link></li>*/}
                             <li><Link href={`/${currentLocale}/news`} className={isActive("/news") ? "active-link" : ""}>{t.news}</Link></li>
                             <li><Link href={`/${currentLocale}/work`} className={isActive("/work") ? "active-link" : ""}>{t.work}</Link></li>
                             <li><Link href={`/${currentLocale}/services`} className={isActive("/services") ? "active-link" : ""}>{t.services}</Link></li>
